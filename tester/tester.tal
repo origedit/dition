@@ -1,0 +1,55 @@
+
+|00 @System &vector $2 &expansion $2 &wst $1 &rst $1 &metadata $2 &r $2 &g $2 &b $2 &debug $1 &state $1
+|20 @Screen &vector $2 &width $2 &height $2 &auto $1 &pad $1 &x $2 &y $2 &addr $2 &pixel $1 &sprite $1
+|a0 @File &vector $2 &success $2 &stat $2 &delete $1 &append $1 &name $2 &length $2 &read $2 &write $2
+|100
+
+@On-reset ( -> )
+	#f000 .System/r DEO2
+	#f000 .System/g DEO2
+	#f000 .System/b DEO2
+	#0100 .Screen/width DEO2
+	#0100 .Screen/height DEO2
+	;path .File/name DEO2
+	#0900 .File/length DEO2
+	;font .File/read DEO2
+	#0004 .Screen/x DEO2
+	#0004 .Screen/y DEO2
+	#00 .Screen/auto DEO
+	;sample-txt <print>
+	BRK
+
+@<print> ( str* -- )
+	.Screen/x DEI2 ,/x STR2
+	&loop ( >_< )
+	LDAk DUP ?{ POP POP2 JMP2r }
+	DUP #0a EQU ?/nl
+	#00 SWP DUP2 #30 SFT2 ;font/chars ADD2 .Screen/addr DEO2
+	#01 .Screen/sprite DEO
+	;font ADD2 LDA #00 SWP .Screen/x DEI2 ADD2 .Screen/x DEO2
+	INC2 !/loop
+	&nl ( c -- )
+	POP [ LIT2 &x $2 ] .Screen/x DEO2
+	.Screen/y DEI2k #000a ADD2 ROT DEO2
+	INC2 !/loop
+
+@path [ "./font.uf1 00 ]
+
+@sample-txt [
+	"Hello 20 "world! 0a
+	"Sphinx 20 "of 20
+	"black 20 "quartz, 20
+	"judge 20 "my 20
+	"vow. 0a "Pack 20
+	"my 20 "box 20
+	"with 20 "five 20
+	"dozen 20 "liquor 20
+	"jugs; 0a "THE 20
+	"QUICK 20 "BROWN 20
+	"FOX 20 "JUMPS 20
+	"OVER 20 "THE 20
+	"LAZY 20 "DOG! 0a
+	"@#$%^&HIII1Il*()[] "\|/?<{}>= 0a "012bh34f5A6a789ft 00 ]
+
+@font $100 &chars $800
+
