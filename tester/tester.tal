@@ -9,10 +9,13 @@
 	#f000 .System/g DEO2
 	#f000 .System/b DEO2
 	#0100 .Screen/width DEO2
-	#0100 .Screen/height DEO2
-	;path .File/name DEO2
+	#0080 .Screen/height DEO2
+	;path/font .File/name DEO2
 	#0900 .File/length DEO2
 	;font .File/read DEO2
+	;path/text .File/name DEO2
+	#0400 .File/length DEO2
+	;sample-txt .File/read DEO2
 	#0004 .Screen/x DEO2
 	#0004 .Screen/y DEO2
 	#00 .Screen/auto DEO
@@ -33,23 +36,10 @@
 	.Screen/y DEI2k #000a ADD2 ROT DEO2
 	INC2 !/loop
 
-@path [ "./font.uf1 00 ]
-
-@sample-txt [
-	"Hello 20 "world! 0a
-	"Sphinx 20 "of 20
-	"black 20 "quartz, 20
-	"judge 20 "my 20
-	"vow. 0a "Pack 20
-	"my 20 "box 20
-	"with 20 "five 20
-	"dozen 20 "liquor 20
-	"jugs; 0a "THE 20
-	"QUICK 20 "BROWN 20
-	"FOX 20 "JUMPS 20
-	"OVER 20 "THE 20
-	"LAZY 20 "DOG! 0a
-	"@#$%^&HIII1Il*()[] "\|/?<{}>= 0a "012bh34f5__-A6a789ft 00 ]
+@path &font [ "./font.uf1 00 ]
+	&text [ "text.txt 00 ]
 
 @font $100 &chars $800
+
+@sample-txt
 
