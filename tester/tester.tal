@@ -27,7 +27,7 @@
 	&loop ( >_< )
 	LDAk DUP ?{ POP POP2 JMP2r }
 	DUP #0a EQU ?/nl
-	#00 SWP DUP2 #30 SFT2 ;font/chars ADD2 .Screen/addr DEO2
+	#20 SUB #00 SWP DUP2 #30 SFT2 ;font/chars ADD2 .Screen/addr DEO2
 	#01 .Screen/sprite DEO
 	;font ADD2 LDA #00 SWP .Screen/x DEI2 ADD2 .Screen/x DEO2
 	INC2 !/loop
@@ -39,7 +39,7 @@
 @path &font [ "./font.uf1 00 ]
 	&text [ "text.txt 00 ]
 
-@font $100 &chars $800
+@font $e0 &chars $800
 
 @sample-txt
 
